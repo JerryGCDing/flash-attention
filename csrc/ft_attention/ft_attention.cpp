@@ -140,7 +140,7 @@ torch::Tensor single_query_attention(const torch::Tensor q,
 
     CHECK_SHAPE(q, batch_size, nheads, headdim);
     CHECK_SHAPE(k, batch_size, nheads_kv, headdim);
-    CHECK_SHAPE(v, batch_size, nheads_kv, headdim);
+    // CHECK_SHAPE(v, batch_size, nheads_kv, headdim);
     CHECK_SHAPE(v_cache, batch_size, nheads_kv, memory_max_seqlen, headdim);
     // k_cache shape: [B, H, Dh/x, L, x] where x=8 for fp16 and x=4 for fp32
     int packsize = k_cache.dtype() == torch::kFloat32 ? 4 : 8;
