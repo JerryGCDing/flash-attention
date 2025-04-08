@@ -422,7 +422,7 @@ mha_fwd_kvcache(at::Tensor &q,                                      // batch_siz
         TORCH_CHECK(v.stride(-1) == 1, "Value tensor must have contiguous last dimension");
         seqlen_knew = k.size(1);
         CHECK_SHAPE(k, batch_size, seqlen_knew, num_heads_k, head_size_og);
-        CHECK_SHAPE(v, batch_size, seqlen_knew, num_heads_k, head_size_og);
+        // CHECK_SHAPE(v, batch_size, seqlen_knew, num_heads_k, head_size_og);
         if (head_size_og % 8 != 0) {
             k_padded = torch::nn::functional::pad(k, torch::nn::functional::PadFuncOptions({0, 8 - head_size_og % 8}));
             v_padded = torch::nn::functional::pad(v, torch::nn::functional::PadFuncOptions({0, 8 - head_size_og % 8}));
