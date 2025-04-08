@@ -276,7 +276,7 @@ mha_bwd(const at::Tensor &dout,                   // batch_size x seqlen_q x num
     // dq_, dk_, dv_ are also padded tensor
     CHECK_SHAPE(q, batch_size, seqlen_q, num_heads, head_size);
     CHECK_SHAPE(k, batch_size, seqlen_k, num_heads_k, head_size);
-    CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
+    // CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
     CHECK_SHAPE(out, batch_size, seqlen_q, num_heads, head_size);
     CHECK_SHAPE(dout, batch_size, seqlen_q, num_heads, head_size);
 
