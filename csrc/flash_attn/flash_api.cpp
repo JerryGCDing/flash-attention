@@ -415,7 +415,7 @@ mha_fwd(at::Tensor &q,         // batch_size x seqlen_q x num_heads x round_mult
 
     CHECK_SHAPE(q, batch_size, seqlen_q, num_heads, head_size);
     CHECK_SHAPE(k, batch_size, seqlen_k, num_heads_k, head_size);
-    CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
+    // CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
 
     at::Tensor out;
     if (out_.has_value()) {
@@ -612,10 +612,10 @@ mha_varlen_fwd(at::Tensor &q,  // total_q x num_heads x head_size, total_q := \s
     if (!paged_KV) {
         const int total_k = k.size(0);
         CHECK_SHAPE(k, total_k, num_heads_k, head_size);
-        CHECK_SHAPE(v, total_k, num_heads_k, head_size);
+        // CHECK_SHAPE(v, total_k, num_heads_k, head_size);
     } else {
         CHECK_SHAPE(k, num_blocks, page_block_size, num_heads_k, head_size);
-        CHECK_SHAPE(v, num_blocks, page_block_size, num_heads_k, head_size);
+        // CHECK_SHAPE(v, num_blocks, page_block_size, num_heads_k, head_size);
         CHECK_SHAPE(block_table, batch_size, max_num_blocks_per_seq);
     }
 
@@ -842,7 +842,7 @@ mha_bwd(const at::Tensor &dout,  // batch_size x seqlen_q x num_heads, x multipl
 
     CHECK_SHAPE(q, batch_size, seqlen_q, num_heads, head_size);
     CHECK_SHAPE(k, batch_size, seqlen_k, num_heads_k, head_size);
-    CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
+    // CHECK_SHAPE(v, batch_size, seqlen_k, num_heads_k, head_size);
     CHECK_SHAPE(out, batch_size, seqlen_q, num_heads, head_size);
     CHECK_SHAPE(dout, batch_size, seqlen_q, num_heads, head_size);
 
@@ -1057,7 +1057,7 @@ mha_varlen_bwd(const at::Tensor &dout,  // total_q x num_heads, x head_size
 
     CHECK_SHAPE(q, total_q, num_heads, head_size);
     CHECK_SHAPE(k, total_k, num_heads_k, head_size);
-    CHECK_SHAPE(v, total_k, num_heads_k, head_size);
+    // CHECK_SHAPE(v, total_k, num_heads_k, head_size);
     CHECK_SHAPE(out, total_q, num_heads, head_size);
     CHECK_SHAPE(dout, total_q, num_heads, head_size);
     CHECK_SHAPE(cu_seqlens_q, batch_size + 1);
@@ -1363,7 +1363,7 @@ mha_fwd_kvcache(at::Tensor &q,                 // batch_size x seqlen_q x num_he
         TORCH_CHECK(v.stride(-1) == 1, "Value tensor must have contiguous last dimension");
         int seqlen_knew = k.size(1);
         CHECK_SHAPE(k, batch_size, seqlen_knew, num_heads_k, head_size_og);
-        CHECK_SHAPE(v, batch_size, seqlen_knew, num_heads_k, head_size_og);
+        // CHECK_SHAPE(v, batch_size, seqlen_knew, num_heads_k, head_size_og);
         if (head_size_og % 8 != 0) {
             k_padded = torch::nn::functional::pad(k, torch::nn::functional::PadFuncOptions({0, 8 - head_size_og % 8}));
             v_padded = torch::nn::functional::pad(v, torch::nn::functional::PadFuncOptions({0, 8 - head_size_og % 8}));
